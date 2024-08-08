@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button, TextField, Box, Dialog, DialogTitle, DialogContent, DialogActions, List, ListItem, ListItemText } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const ChatWidget = ({ onClose }) => {
   const [messages, setMessages] = useState([]);
@@ -16,8 +17,13 @@ const ChatWidget = ({ onClose }) => {
   };
 
   return (
-    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Chatbot</DialogTitle>
+    <Dialog open onClose={onClose} fullScreen>
+      <DialogTitle>
+        Chatbot
+        <Button onClick={onClose} color="secondary" sx={{ position: 'absolute', right: 16, top: 16 }}>
+          <CloseIcon />
+        </Button>
+      </DialogTitle>
       <DialogContent dividers>
         <List>
           {messages.map((msg, index) => (
@@ -25,7 +31,7 @@ const ChatWidget = ({ onClose }) => {
               <ListItemText 
                 primary={msg.text} 
                 align={msg.sender === 'user' ? 'right' : 'left'} 
-                style={{ background: msg.sender === 'user' ? '#e0e0e0' : '#f0f0f0', borderRadius: '10px', padding: '10px' }} 
+                style={{ background: msg.sender === 'user' ? 'black' : '#f0f0f0', borderRadius: '10px', padding: '10px' }} 
               />
             </ListItem>
           ))}
