@@ -105,32 +105,6 @@ export default function Home() {
     }
   };
 
-  const handleFeedbackOpen = () => setOpenFeedbackDialog(true);
-  const handleFeedbackClose = () => setOpenFeedbackDialog(false);
-
-  const handleFeedbackSubmit = async () => {
-    if (feedbackRating > 0) {
-      try {
-        const userId = userEmail; // Use email as user ID
-        if (userId) {
-          const feedbackCollectionRef = collection(firestore, 'users', userId, 'feedback');
-          await addDoc(feedbackCollectionRef, {
-            rating: feedbackRating,
-            timestamp: Timestamp.fromDate(new Date()),
-          });
-          console.log('Feedback submitted successfully');
-        } else {
-          console.error('User ID is missing');
-        }
-      } catch (error) {
-        console.error('Error submitting feedback:', error);
-      }
-    } else {
-      console.error('Invalid feedback rating');
-    }
-    setOpenFeedbackDialog(false);
-  };
-
   const toggleChat = () => setChatOpen(!chatOpen);
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
   const handleMenuClose = () => setAnchorEl(null);
@@ -254,21 +228,6 @@ export default function Home() {
             </Typography>
           </Box>
         </Container>
-        <Dialog open={openFeedbackDialog} onClose={handleFeedbackClose}>
-          <DialogTitle>Feedback</DialogTitle>
-          <DialogContent>
-            <Typography gutterBottom>How would you rate your experience?</Typography>
-            <Rating
-              name="feedback-rating"
-              value={feedbackRating}
-              onChange={(event, newValue) => setFeedbackRating(newValue)}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleFeedbackClose}>Cancel</Button>
-            <Button onClick={handleFeedbackSubmit}>Submit</Button>
-          </DialogActions>
-        </Dialog>
         {chatOpen && (
           <ChatWidget
             messages={messages}
