@@ -17,15 +17,13 @@ export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hi! I'm the Headstarter support assistant. How can I help you today?",
+      content: "Hi! I'm the HelpBot. How can I help you today?",
     },
   ]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  const [openFeedbackDialog, setOpenFeedbackDialog] = useState(false);
-  const [feedbackRating, setFeedbackRating] = useState(0);
   const [chatOpen, setChatOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 

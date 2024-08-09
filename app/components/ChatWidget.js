@@ -6,14 +6,20 @@ import { Button, TextField, Box, Dialog, DialogTitle, DialogContent, DialogActio
 import CloseIcon from '@mui/icons-material/Close';
 
 const ChatWidget = ({ onClose }) => {
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef(null);
 
+  const [messages, setMessages] = useState([
+    {
+      semder: 'assistant',
+      text: "Hi! I'm the HelpBot. How can I help you today?",
+    },
+  ]);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
-
+  
   const sendMessage = () => {
     if (input.trim()) {
       const newMessages = [...messages, { sender: 'user', text: input }];
