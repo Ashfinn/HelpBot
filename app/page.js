@@ -12,13 +12,13 @@ import Testimonial from './components/Testimonial';
 import Feature from './components/Feature';
 import Pricing from './components/Pricing';
 import theme from '../theme'; // Ensure this path is correct
-
+import Header from './components/Header';
 export default function Home() {
   const [messages, setMessages] = useState([
     {
       sender: 'ai',
       text: "Hi! I'm the HelpBot support assistant. How can I help you today?",
-    }
+    },
   ]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -117,61 +117,17 @@ export default function Home() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundImage: 'url(/background.jpg)', // Add your background image here
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundImage: 'url(/background.jpg)',
+          backgroundColor: '#ebebed',
+          backgroundSize: 'contain',
+          backgroundPosition: 'top',
+          backgroundRepeat: 'no-repeat',
           textAlign: 'center',
           color: 'text.primary',
           p: 3,
         }}
       >
-        <AppBar position="static" sx={{ backgroundColor: '#1976d2' }}>
-          <Toolbar>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              HelpBot
-            </Typography>
-            {isMobile ? (
-              <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuOpen}>
-                <MenuIcon />
-              </IconButton>
-            ) : (
-              <>
-                <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }}>Home</Button>
-                <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }}>Features</Button>
-                <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }}>Testimonials</Button>
-                <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }}>Pricing</Button>
-                <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }}>Contact</Button>
-                {!isLoggedIn ? (
-                  <>
-                    <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }} onClick={() => router.push('/sign-in')}>
-                      Login
-                    </Button>
-                    <Button variant="outlined" color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }} onClick={() => router.push('/sign-up')}>
-                      Sign Up
-                    </Button>
-                  </>
-                ) : (
-                  <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }} onClick={handleLogout}>
-                    Logout
-                  </Button>
-                )}
-              </>
-            )}
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-              <MenuItem onClick={handleMenuClose}>Home</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Features</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Testimonials</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Pricing</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Contact</MenuItem>
-              {!isLoggedIn && (
-                <>
-                  <MenuItem onClick={() => router.push('/sign-in')}>Login</MenuItem>
-                  <MenuItem onClick={() => router.push('/sign-up')}>Sign Up</MenuItem>
-                </>
-              )}
-            </Menu>
-          </Toolbar>
-        </AppBar>
+        <Header />
         <Container maxWidth="lg">
           <Box
             sx={{
@@ -192,6 +148,14 @@ export default function Home() {
               Open Chat
             </Button>
           </Box>
+            <Box sx={{ textAlign: 'left' }}>
+              <Typography variant="h4" gutterBottom>
+                About HelpBot
+              </Typography>
+              <Typography variant="body1" paragraph>
+                HelpBot is an innovative AI-driven customer support platform designed to streamline and enhance your customer service experience. Our mission is to provide businesses with a powerful tool that ensures customer satisfaction through instant, accurate, and personalized responses. With seamless integration, 24/7 availability, and cutting-edge AI technology, HelpBot is the ultimate solution for modern customer support needs.
+              </Typography>
+            </Box>
         </Container>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Grid container spacing={3}>
@@ -217,14 +181,6 @@ export default function Home() {
           <Pricing />
         </Container>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
-          <Box sx={{ textAlign: 'left' }}>
-            <Typography variant="h4" gutterBottom>
-              About HelpBot
-            </Typography>
-            <Typography variant="body1" paragraph>
-              HelpBot is an innovative AI-driven customer support platform designed to streamline and enhance your customer service experience. Our mission is to provide businesses with a powerful tool that ensures customer satisfaction through instant, accurate, and personalized responses. With seamless integration, 24/7 availability, and cutting-edge AI technology, HelpBot is the ultimate solution for modern customer support needs.
-            </Typography>
-          </Box>
         </Container>
         {chatOpen && (
           <ChatWidget

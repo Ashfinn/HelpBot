@@ -35,7 +35,7 @@ const SignIn = () => {
       bgcolor="white"
     >
       <Box
-        bgcolor="grey.100"
+        bgcolor="#ebebed"
         p={6} // Increase padding
         borderRadius={2}
         boxShadow={3}
