@@ -13,6 +13,8 @@ import Feature from './components/Feature';
 import Pricing from './components/Pricing';
 import theme from '../theme'; // Ensure this path is correct
 import Header from './components/Header';
+import Footer from './components/Footer';
+import Founders from './components/Founders';
 export default function Home() {
   const [messages, setMessages] = useState([
     {
@@ -148,14 +150,14 @@ export default function Home() {
               Open Chat
             </Button>
           </Box>
-            <Box sx={{ textAlign: 'left' }}>
-              <Typography variant="h4" gutterBottom>
-                About HelpBot
-              </Typography>
-              <Typography variant="body1" paragraph>
-                HelpBot is an innovative AI-driven customer support platform designed to streamline and enhance your customer service experience. Our mission is to provide businesses with a powerful tool that ensures customer satisfaction through instant, accurate, and personalized responses. With seamless integration, 24/7 availability, and cutting-edge AI technology, HelpBot is the ultimate solution for modern customer support needs.
-              </Typography>
-            </Box>
+          <Box sx={{ textAlign: 'left' }}>
+            <Typography variant="h4" gutterBottom>
+              About HelpBot
+            </Typography>
+            <Typography variant="body1" paragraph>
+              HelpBot is an innovative AI-driven customer support platform designed to streamline and enhance your customer service experience. Our mission is to provide businesses with a powerful tool that ensures customer satisfaction through instant, accurate, and personalized responses. With seamless integration, 24/7 availability, and cutting-edge AI technology, HelpBot is the ultimate solution for modern customer support needs.
+            </Typography>
+          </Box>
         </Container>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Grid container spacing={3}>
@@ -164,6 +166,7 @@ export default function Home() {
             <Feature title="Seamless Integration" description="Easily integrate with your existing systems." />
           </Grid>
         </Container>
+        <Founders />
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
             What Our Customers Say
@@ -182,6 +185,7 @@ export default function Home() {
         </Container>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
         </Container>
+        <Footer />
         {chatOpen && (
           <ChatWidget
             messages={messages}
@@ -195,5 +199,5 @@ export default function Home() {
         )}
       </Box>
     </ThemeProvider>
-  );
+);
 }
