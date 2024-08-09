@@ -14,12 +14,7 @@ import Pricing from './components/Pricing';
 import theme from '../theme'; // Ensure this path is correct
 
 export default function Home() {
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: "Hi! I'm the HelpBot. How can I help you today?",
-    },
-  ]);
+
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
