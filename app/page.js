@@ -1,33 +1,139 @@
-"use client";
-
-import { useState } from 'react';
-import { ThemeProvider, CssBaseline, Container, Typography, Box, Button, Grid, AppBar, Toolbar, IconButton, Menu, MenuItem } from '@mui/material';
+'use client';
+import { useState, useEffect, useRef } from 'react';
+import { Box, Button, Stack, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Rating, Typography, Grid, AppBar, Toolbar, IconButton, Menu, MenuItem, Container, CssBaseline } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, ThemeProvider } from '@mui/material/styles'; // Add ThemeProvider import
+import { useRouter } from 'next/navigation';
+import { firestore } from './firebase/config'; // Ensure this path is correct
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import ChatWidget from './components/ChatWidget';
-import theme from '../theme';
 import Testimonial from './components/Testimonial';
 import Feature from './components/Feature';
 import Pricing from './components/Pricing';
+import theme from '../theme'; // Ensure this path is correct
 
-const Home = () => {
+export default function Home() {
+  const [messages, setMessages] = useState([
+    {
+      role: 'assistant',
+      content: "Hi! I'm the Headstarter support assistant. How can I help you today?",
+    },
+  ]);
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [openFeedbackDialog, setOpenFeedbackDialog] = useState(false);
+  const [feedbackRating, setFeedbackRating] = useState(0);
   const [chatOpen, setChatOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const router = useRouter();
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
+  const messagesEndRef = useRef(null);
 
-  const toggleChat = () => {
-    setChatOpen(!chatOpen);
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const user = sessionStorage.getItem('user');
+      if (user) {
+        setIsLoggedIn(true);
+        setUserEmail(user);
+      }
+    };
+    checkLoginStatus();
+  }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('user');
+    setIsLoggedIn(false);
+    setUserEmail('');
+    router.push('/sign-in');
   };
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const sendMessage = async () => {
+    if (!message.trim() || isLoading) return;
+    setIsLoading(true);
+    setMessage('');
+    setMessages((messages) => [
+      ...messages,
+      { role: 'user', content: message },
+      { role: 'assistant', content: '' },
+    ]);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify([...messages, { role: 'user', content: message }]),
+      });
+
+      if (!response.ok) throw new Error('Network response was not ok');
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const text = decoder.decode(value, { stream: true });
+        setMessages((messages) => {
+          const lastMessage = messages[messages.length - 1];
+          const otherMessages = messages.slice(0, messages.length - 1);
+          return [...otherMessages, { ...lastMessage, content: lastMessage.content + text }];
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setMessages((messages) => [
+        ...messages,
+        { role: 'assistant', content: "I'm sorry, but I encountered an error. Please try again later." },
+      ]);
+    }
+    setIsLoading(false);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
   };
+
+  const handleFeedbackOpen = () => setOpenFeedbackDialog(true);
+  const handleFeedbackClose = () => setOpenFeedbackDialog(false);
+
+  const handleFeedbackSubmit = async () => {
+    if (feedbackRating > 0) {
+      try {
+        const userId = userEmail; // Use email as user ID
+        if (userId) {
+          const feedbackCollectionRef = collection(firestore, 'users', userId, 'feedback');
+          await addDoc(feedbackCollectionRef, {
+            rating: feedbackRating,
+            timestamp: Timestamp.fromDate(new Date()),
+          });
+          console.log('Feedback submitted successfully');
+        } else {
+          console.error('User ID is missing');
+        }
+      } catch (error) {
+        console.error('Error submitting feedback:', error);
+      }
+    } else {
+      console.error('Invalid feedback rating');
+    }
+    setOpenFeedbackDialog(false);
+  };
+
+  const toggleChat = () => setChatOpen(!chatOpen);
+  const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
 
   return (
     <ThemeProvider theme={theme}>
@@ -47,7 +153,7 @@ const Home = () => {
           p: 3,
         }}
       >
-        <AppBar position="static" color="transparent" elevation={0} sx={{ backgroundColor: 'transparent' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#1976d2' }}>
           <Toolbar>
             <Typography variant="h6" sx={{ flexGrow: 1 }}>
               HelpBot
@@ -63,6 +169,20 @@ const Home = () => {
                 <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }}>Testimonials</Button>
                 <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }}>Pricing</Button>
                 <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }}>Contact</Button>
+                {!isLoggedIn ? (
+                  <>
+                    <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }} onClick={() => router.push('/sign-in')}>
+                      Login
+                    </Button>
+                    <Button variant="outlined" color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }} onClick={() => router.push('/sign-up')}>
+                      Sign Up
+                    </Button>
+                  </>
+                ) : (
+                  <Button color="inherit" sx={{ mx: 1, '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' } }} onClick={handleLogout}>
+                    Logout
+                  </Button>
+                )}
               </>
             )}
             <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
@@ -71,6 +191,12 @@ const Home = () => {
               <MenuItem onClick={handleMenuClose}>Testimonials</MenuItem>
               <MenuItem onClick={handleMenuClose}>Pricing</MenuItem>
               <MenuItem onClick={handleMenuClose}>Contact</MenuItem>
+              {!isLoggedIn && (
+                <>
+                  <MenuItem onClick={() => router.push('/sign-in')}>Login</MenuItem>
+                  <MenuItem onClick={() => router.push('/sign-up')}>Sign Up</MenuItem>
+                </>
+              )}
             </Menu>
           </Toolbar>
         </AppBar>
@@ -128,10 +254,33 @@ const Home = () => {
             </Typography>
           </Box>
         </Container>
+        <Dialog open={openFeedbackDialog} onClose={handleFeedbackClose}>
+          <DialogTitle>Feedback</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>How would you rate your experience?</Typography>
+            <Rating
+              name="feedback-rating"
+              value={feedbackRating}
+              onChange={(event, newValue) => setFeedbackRating(newValue)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleFeedbackClose}>Cancel</Button>
+            <Button onClick={handleFeedbackSubmit}>Submit</Button>
+          </DialogActions>
+        </Dialog>
+        {chatOpen && (
+          <ChatWidget
+            messages={messages}
+            onSendMessage={sendMessage}
+            onMessageChange={setMessage}
+            message={message}
+            onKeyPress={handleKeyPress}
+            isLoading={isLoading}
+            onClose={() => setChatOpen(false)}
+          />
+        )}
       </Box>
-      {chatOpen && <ChatWidget onClose={toggleChat} />}
     </ThemeProvider>
   );
-};
-
-export default Home;
+}
