@@ -84,8 +84,7 @@ export default function Header({ isLoggedIn }) {
                     '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.1)' },
                   }}
                   onClick={() => handleNavigation('/sign-in')}
-                >
-                  Login
+                >Login
                 </Button>
                 <Button
                   sx={{
