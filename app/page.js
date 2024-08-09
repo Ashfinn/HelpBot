@@ -17,7 +17,7 @@ export default function Home() {
   const [messages, setMessages] = useState([
     {
       sender: 'ai',
-      text: "Hi! I'm the HelpBot. How can I help you today?",
+      text: "Hi! I'm the HelpBot support assistant. How can I help you today?",
     }
   ]);
   const [message, setMessage] = useState('');
