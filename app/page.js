@@ -1,3 +1,7 @@
+//use state isLoggedIn to check if the user is logged in or not, if logged in then show logout button
+
+
+
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { Box, Button, Stack, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Rating, Typography, Grid, AppBar, Toolbar, IconButton, Menu, MenuItem, Container, CssBaseline } from '@mui/material';
@@ -15,6 +19,7 @@ import theme from '../theme'; // Ensure this path is correct
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Founders from './components/Founders';
+
 export default function Home() {
   const [messages, setMessages] = useState([
     {
