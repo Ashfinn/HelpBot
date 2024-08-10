@@ -20,7 +20,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-firebase-hooks": "^5.1.1",
-    "shadcn": "^1.0.0"
+    "shadcn": "^1.0.0",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "eslint": "^8",
