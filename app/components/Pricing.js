@@ -10,13 +10,13 @@ const Pricing = () => {
               Basic Plan
             </Typography>
             <Typography variant="h5" gutterBottom>
-              $19/month
+              Free
             </Typography>
             <Typography variant="body1">
               Essential features for small businesses.
             </Typography>
             <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-              Choose Plan
+              Get Started
             </Button>
           </Paper>
         </Grid>

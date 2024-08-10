@@ -27,12 +27,15 @@ const SignIn = () => {
   };
 
   return (
+    
+    
     <Box
       minHeight="100vh"
       display="flex"
       justifyContent="center"
       alignItems="center"
       bgcolor="white"
+      
     >
       <Box
         bgcolor="#ebebed"
@@ -40,6 +43,7 @@ const SignIn = () => {
         borderRadius={2}
         boxShadow={3}
         width={450} // Increase width
+        
       >
         <Typography variant="h3" color="textPrimary" mb={3}>Sign In</Typography> {/* Increase font size and margin */}
         <TextField

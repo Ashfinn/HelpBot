@@ -1,4 +1,4 @@
-# AI Customer Support Chatbot
+# HelpBot
 
 This project is a modern AI customer support chatbot built using Next.js and Material-UI (MUI). The chatbot interface is designed to be sleek, dark-themed, and animated, providing a user-friendly experience.
 
@@ -22,8 +22,8 @@ This project is a modern AI customer support chatbot built using Next.js and Mat
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/ai-customer-support-chatbot.git
-    cd ai-customer-support-chatbot
+    git clone https://github.com/your-username/helpbot.git
+    cd helpbot
     ```
 
 2. **Install dependencies:**
