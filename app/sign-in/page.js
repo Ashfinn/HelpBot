@@ -30,7 +30,7 @@ const SignIn = () => {
     }
   };
 
-  return (  
+  return (
     <Box
       minHeight="100vh"
       display="flex"
@@ -42,7 +42,13 @@ const SignIn = () => {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
-      width={{ xs: '100%', sm: 400, md: 450 }}
+    >
+      <Box
+        bgcolor="grey.100"
+        p={4}
+        borderRadius={2}
+        boxShadow={3}
+        width={{ xs: '100%', sm: 300, md: 350 }}
       >
         <Typography variant="h4" color="textPrimary" mb={3} fontWeight="bold">Sign In</Typography>
         <TextField
@@ -93,6 +99,7 @@ const SignIn = () => {
           {loading ? <CircularProgress size={24} /> : 'Sign In'}
         </Button>
       </Box>
+    </Box>
   );
 };
 
