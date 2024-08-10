@@ -93,7 +93,6 @@ const SignIn = () => {
           {loading ? <CircularProgress size={24} /> : 'Sign In'}
         </Button>
       </Box>
-    </Box>
   );
 };
 
