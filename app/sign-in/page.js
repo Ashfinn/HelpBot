@@ -30,7 +30,7 @@ const SignIn = () => {
     }
   };
 
-  return (
+  return (  
     <Box
       minHeight="100vh"
       display="flex"
@@ -42,13 +42,7 @@ const SignIn = () => {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
-    >
-      <Box
-        bgcolor="#ebebed"
-        p={6}
-        borderRadius={2}
-        boxShadow={3}
-        width={{ xs: '100%', sm: 400, md: 450 }}
+      width={{ xs: '100%', sm: 400, md: 450 }}
       >
         <Typography variant="h4" color="textPrimary" mb={3} fontWeight="bold">Sign In</Typography>
         <TextField

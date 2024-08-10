@@ -1,3 +1,7 @@
+//use state isLoggedIn to check if the user is logged in or not, if logged in then show logout button
+
+
+
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { Box, Button, Stack, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Rating, Typography, Grid, AppBar, Toolbar, IconButton, Menu, MenuItem, Container, CssBaseline } from '@mui/material';
@@ -13,6 +17,9 @@ import Feature from './components/Feature';
 import Pricing from './components/Pricing';
 import theme from '../theme'; // Ensure this path is correct
 import Header from './components/Header';
+import Footer from './components/Footer';
+import Founders from './components/Founders';
+
 export default function Home() {
   const [messages, setMessages] = useState([
     {
@@ -148,22 +155,23 @@ export default function Home() {
               Open Chat
             </Button>
           </Box>
-            <Box sx={{ textAlign: 'left' }}>
-              <Typography variant="h4" gutterBottom>
-                About HelpBot
-              </Typography>
-              <Typography variant="body1" paragraph>
-                HelpBot is an innovative AI-driven customer support platform designed to streamline and enhance your customer service experience. Our mission is to provide businesses with a powerful tool that ensures customer satisfaction through instant, accurate, and personalized responses. With seamless integration, 24/7 availability, and cutting-edge AI technology, HelpBot is the ultimate solution for modern customer support needs.
-              </Typography>
-            </Box>
+          <Box sx={{ textAlign: 'left' }}>
+            <Typography variant="h4" gutterBottom>
+              About HelpBot
+            </Typography>
+            <Typography variant="body1" paragraph>
+              HelpBot is an innovative AI-driven customer support platform designed to streamline and enhance your customer service experience. Our mission is to provide businesses with a powerful tool that ensures customer satisfaction through instant, accurate, and personalized responses. With seamless integration, 24/7 availability, and cutting-edge AI technology, HelpBot is the ultimate solution for modern customer support needs.
+            </Typography>
+          </Box>
         </Container>
-        <Container maxWidth="lg" sx={{ mt: 5 }}>
+        <Container maxWidth="lg" sx={{ mt: 5, mb: 5 }}>
           <Grid container spacing={3}>
             <Feature title="Instant Feedback" description="Get instant feedback to all your queries." />
             <Feature title="24/7 Availability" description="We are available around the clock." />
             <Feature title="Seamless Integration" description="Easily integrate with your existing systems." />
           </Grid>
         </Container>
+        <Founders  maxWidth="lg" sx={{ mt: 5, mb: 5 }}/>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
             What Our Customers Say
@@ -182,6 +190,7 @@ export default function Home() {
         </Container>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
         </Container>
+        <Footer />
         {chatOpen && (
           <ChatWidget
             messages={messages}
@@ -195,5 +204,5 @@ export default function Home() {
         )}
       </Box>
     </ThemeProvider>
-  );
+);
 }
