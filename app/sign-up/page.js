@@ -32,6 +32,7 @@ const SignUp = () => {
       justifyContent="center"
       alignItems="center"
       bgcolor="white"
+      
     >
       <Box
         bgcolor="grey.100"

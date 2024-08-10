@@ -164,14 +164,14 @@ export default function Home() {
             </Typography>
           </Box>
         </Container>
-        <Container maxWidth="lg" sx={{ mt: 5 }}>
+        <Container maxWidth="lg" sx={{ mt: 5, mb: 5 }}>
           <Grid container spacing={3}>
             <Feature title="Instant Feedback" description="Get instant feedback to all your queries." />
             <Feature title="24/7 Availability" description="We are available around the clock." />
             <Feature title="Seamless Integration" description="Easily integrate with your existing systems." />
           </Grid>
         </Container>
-        <Founders />
+        <Founders  maxWidth="lg" sx={{ mt: 5, mb: 5 }}/>
         <Container maxWidth="lg" sx={{ mt: 5 }}>
           <Typography variant="h4" gutterBottom>
             What Our Customers Say
