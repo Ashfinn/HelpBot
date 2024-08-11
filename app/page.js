@@ -1,24 +1,17 @@
-//use state isLoggedIn to check if the user is logged in or not, if logged in then show logout button
-
-
-
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { Box, Button, Stack, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Rating, Typography, Grid, AppBar, Toolbar, IconButton, Menu, MenuItem, Container, CssBaseline } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Box, Button, Container, CssBaseline, Typography, Grid, ThemeProvider } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme, ThemeProvider } from '@mui/material/styles'; // Add ThemeProvider import
+import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
-import { firestore } from './firebase/config'; // Ensure this path is correct
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import ChatWidget from './components/ChatWidget';
-import Testimonial from './components/Testimonial';
-import Feature from './components/Feature';
-import Pricing from './components/Pricing';
-import theme from '../theme'; // Ensure this path is correct
 import Header from './components/Header';
 import Footer from './components/Footer';
+
+import Feature from './components/Feature';
+import Testimonial from './components/Testimonial';
+import Pricing from './components/Pricing';
 import Founders from './components/Founders';
+import theme from '../theme';
 
 export default function Home() {
   const [messages, setMessages] = useState([
@@ -53,6 +46,18 @@ export default function Home() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Add Tidio script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "//code.tidio.co/krqixenaacagu6fl0wvcg2h5mf0jjfj2.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
@@ -151,9 +156,7 @@ export default function Home() {
             <Typography variant="h5" gutterBottom>
               Your personalized AI assistant
             </Typography>
-            <Button variant="contained" color="primary" onClick={toggleChat} size="large">
-              Open Chat
-            </Button>
+            
           </Box>
           <Box sx={{ textAlign: 'left' }}>
             <Typography variant="h4" gutterBottom>
@@ -164,6 +167,11 @@ export default function Home() {
             </Typography>
           </Box>
         </Container>
+        {isLoggedIn && (
+          <Button variant="outlined" color="secondary" onClick={handleLogout}>
+            Logout
+          </Button>
+        )}
         <Container maxWidth="lg" sx={{ mt: 5, mb: 5 }}>
           <Grid container spacing={3}>
             <Feature title="Instant Feedback" description="Get instant feedback to all your queries." />
@@ -204,5 +212,5 @@ export default function Home() {
         )}
       </Box>
     </ThemeProvider>
-);
+  );
 }
