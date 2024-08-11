@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebase/config';
 import { useRouter } from 'next/navigation';
-import { Box, Button, TextField, Typography, CircularProgress, InputAdornment } from '@mui/material';
+import { Box, Button, TextField, Typography, CircularProgress, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
 
@@ -13,8 +14,13 @@ const backgroundImageUrl = 'https://media.istockphoto.com/id/1390404138/vector/b
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSignIn = async () => {
     try {
@@ -68,7 +74,7 @@ const SignIn = () => {
           }}
         />
         <TextField
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           label="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -79,6 +85,16 @@ const SignIn = () => {
             startAdornment: (
               <InputAdornment position="start">
                 <LockIcon />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
               </InputAdornment>
             ),
           }}
