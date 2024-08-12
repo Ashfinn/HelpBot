@@ -199,17 +199,6 @@ export default function Home() {
         <Container maxWidth="lg" sx={{ mt: 5 }}>
         </Container>
         <Footer />
-        {chatOpen && (
-          <ChatWidget
-            messages={messages}
-            onSendMessage={sendMessage}
-            onMessageChange={setMessage}
-            message={message}
-            onKeyPress={handleKeyPress}
-            isLoading={isLoading}
-            onClose={() => setChatOpen(false)}
-          />
-        )}
       </Box>
     </ThemeProvider>
   );
