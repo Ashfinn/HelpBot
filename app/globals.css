@@ -1,7 +1,3 @@
-/* globals.css */
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: black;
-  margin: 0;
-  padding: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

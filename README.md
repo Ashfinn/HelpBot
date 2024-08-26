@@ -1,95 +1,36 @@
-# HelpBot - Modern AI Customer Support Chatbot
-
-HelpBot is a cutting-edge AI customer support chatbot built using Next.js and Material-UI (MUI). With its sleek, dark-themed design and smooth animations, HelpBot provides a user-friendly and engaging experience for customers seeking assistance.
-
-## Features
-
-- HelpBot boasts a contemporary and intuitive user interface, crafted using Material-UI components, ensuring a seamless experience across various devices.
-- Engage with HelpBot through a captivating full-screen chat interface, enhanced with smooth animations for a delightful conversational experience.
-- Leveraging the power of Google's Gemini model, HelpBot generates intelligent and context-aware responses, providing accurate and helpful assistance to users.
-- The landing page offers a comprehensive overview of HelpBot's capabilities and benefits, allowing users to understand its purpose and value.
-- HelpBot's sleek, dark-themed design with sharp edges creates a modern and sophisticated visual appeal, ensuring a pleasant user experience.
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-### Prerequisites
+First, run the development server:
 
-- Node.js (v14 or later)
-- npm or yarn
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-### Installation
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-1. **Clone the repository:**
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-    ```bash
-    git clone https://github.com/your-username/helpbot.git
-    cd helpbot
-    ```
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-2. **Install dependencies:**
+## Learn More
 
-    ```bash
-    npm install
-    ```
-    ```
+To learn more about Next.js, take a look at the following resources:
 
-### Running the Application
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-1. **Start the development server:**
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-    ```bash
-    npm run dev
-    ```
+## Deploy on Vercel
 
-2. **Open your browser and navigate to:**
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-    ```plaintext
-    http://localhost:3000
-    ```
-
-### Folder Structure
-
-.
-├── app
-│ ├── components
-│ │ ├── ChatWidget.js
-│ │ └── ...
-│ ├── page.js
-│ └── ...
-├── public
-│ └── ...
-├── .env.local
-├── package.json
-└── README.md
-
-
-### Usage
-
-- **Landing Page:** Upon visiting the landing page, users can learn about HelpBot's features and capabilities. A prominent button is provided to open the chat interface and start interacting with the AI chatbot.
-- **Chat Interface:** Once the chat interface is opened, users can engage in a conversation with HelpBot. They can ask questions, seek assistance, and receive intelligent and helpful responses from the AI-powered chatbot.
-
-## Technologies Used
-
-HelpBot is built using the following technologies:
-
-- **Next.js:** A powerful React framework for building server-side rendered and statically generated applications.
-- **Material-UI:** A popular UI component library for React, providing a wide range of pre-built, customizable components for creating beautiful and responsive user interfaces.
-- **Google Gemini:** An advanced language model by Google, used to generate intelligent and context-aware responses for the chatbot. Gemini offers multimodal capabilities, allowing seamless integration of text, images, and other media types.
-
-### Contributing
-
-Contributions to HelpBot are welcome! If you encounter any issues, have suggestions for improvements, or would like to add new features, please open an issue or submit a pull request. We appreciate your contributions to make HelpBot even better.
-
-### Acknowledgements
-
-We would like to express our gratitude to the following resources and communities:
-
-- [Next.js](https://nextjs.org/) for providing a powerful framework for building web applications.
-- [Material-UI](https://mui.com/) for offering a comprehensive set of UI components and design guidelines.
-- [Google Cloud](https://cloud.google.com/) for developing advanced language models like Gemini, enabling intelligent conversational experiences.
-- The open-source community for their invaluable contributions, tutorials, and resources that helped in the development of HelpBot.
-
-If you have any questions or need further assistance, please feel free to reach out to our team. We hope you find HelpBot helpful and enjoy using it!
-
-![Thank you](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGZrYWtpdnZxbWxydDI4NXR2Y2w3ODd6OGd5MXZoOHQzZGFnNTMyYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NDFEIflr3aNtUXP8Od/giphy.gif)>
-
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
