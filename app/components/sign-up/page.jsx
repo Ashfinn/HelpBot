@@ -4,17 +4,15 @@ import { useState } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '@/app/firebase/config';
 import { useRouter } from 'next/navigation';
-import zxcvbn from 'zxcvbn';
-import { Box, Button, TextField, Typography, CircularProgress, InputAdornment, IconButton, LinearProgress } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import EmailIcon from '@mui/icons-material/Email';
-import LockIcon from '@mui/icons-material/Lock';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import 'daisyui/dist/full.css'; // Ensure DaisyUI styles are included
 
 const backgroundImageUrl = 'https://media.istockphoto.com/id/1390404138/vector/beautiful-watercolor-sky-and-cloud-background-illustration.jpg?s=612x612&w=0&k=20&c=YNzqdVU9ZPS-OVlddtJyIIb1JCWgZ0LpYHoG2Y_p4og=';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
   const router = useRouter();
@@ -24,12 +22,17 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
     try {
       const res = await createUserWithEmailAndPassword(email, password);
       if (res) {
         sessionStorage.setItem('user', email);
         setEmail('');
         setPassword('');
+        setConfirmPassword('');
         router.push('/sign-in');
       }
     } catch (e) {
@@ -45,93 +48,93 @@ const SignUp = () => {
   const strengthLabel = ['Weak', 'Fair', 'Good', 'Strong', 'Very Strong'][passwordStrength];
 
   return (
-    <Box
-      minHeight="100vh"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      sx={{
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{
         backgroundImage: `url(${backgroundImageUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
     >
-      <Box
-        bgcolor="grey.100"
-        p={4}
-        borderRadius={2}
-        boxShadow={3}
-        width={{ xs: '100%', sm: 300, md: 350 }}
-      >
-        <Typography variant="h4" color="textPrimary" mb={2} fontWeight="bold">Sign Up</Typography>
-        <TextField
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+        <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+        <input
           type="email"
-          label="Email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-          margin="normal"
-          variant="outlined"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailIcon />
-              </InputAdornment>
-            ),
-          }}
+          className="input input-bordered w-full mb-4"
         />
-        <TextField
-          type={showPassword ? 'text' : 'password'}
-          label="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          margin="normal"
-          variant="outlined"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LockIcon />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
+        <div className="relative mb-4">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input input-bordered w-full"
+          />
+          <button
+            type="button"
+            onClick={handleClickShowPassword}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+          >
+            {showPassword ? (
+              <EyeSlashIcon className="w-6 h-6 text-gray-500" />
+            ) : (
+              <EyeIcon className="w-6 h-6 text-gray-500" />
+            )}
+          </button>
+        </div>
+        <div className="relative mb-4">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="input input-bordered w-full"
+          />
+          <button
+            type="button"
+            onClick={handleClickShowPassword}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+          >
+            {showPassword ? (
+              <EyeSlashIcon className="w-6 h-6 text-gray-500" />
+            ) : (
+              <EyeIcon className="w-6 h-6 text-gray-500" />
+            )}
+          </button>
+        </div>
         {password && (
-          <Box mt={2}>
-            <LinearProgress variant="determinate" value={(passwordStrength + 1) * 20} />
-            <Typography variant="body2" color="textSecondary" align="center">
-              Password strength: {strengthLabel}
-            </Typography>
-          </Box>
+          <div className="mb-4">
+            <div className="relative mb-2">
+              <div className={`w-full bg-gray-200 rounded-full h-2.5`}>
+                <div
+                  className={`h-2.5 rounded-full ${passwordStrength === 0 ? 'bg-red-500' : passwordStrength === 1 ? 'bg-yellow-500' : passwordStrength === 2 ? 'bg-green-500' : 'bg-blue-500'}`}
+                  style={{ width: `${(passwordStrength + 1) * 20}%` }}
+                />
+              </div>
+              <p className="text-center text-sm mt-1">
+                Password strength: {strengthLabel}
+              </p>
+            </div>
+          </div>
         )}
         {error && (
-          <Typography color="error" sx={{ mt: 2, textAlign: 'center' }}>
+          <p className="text-red-500 text-center mb-4">
             {error.message}
-          </Typography>
+          </p>
         )}
-        <Button
+        <button
           onClick={handleSignUp}
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ mt: 2 }}
+          className={`btn btn-primary w-full ${loading ? 'loading' : ''}`}
           disabled={loading}
         >
-          {loading ? <CircularProgress size={24} /> : 'Sign Up'}
-        </Button>
-      </Box>
-    </Box>
+          {loading ? 'Signing Up...' : 'Sign Up'}
+        </button>
+      </div>
+    </div>
   );
 };
 
