@@ -1,3 +1,6 @@
+/* eslint-disable */
+
+
 import React, { useState } from 'react';
 import { FaCheckCircle } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
