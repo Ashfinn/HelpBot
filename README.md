@@ -2,17 +2,6 @@
 
 Welcome to **HelpBot**, an innovative web application built with Next.js that revolutionizes customer support through intelligent AI. HelpBot delivers 24/7 support, instant AI responses, smart automation, and global business solutions—enhancing user experiences at scale. With a modern, responsive UI and seamless interactive components, HelpBot is trusted by over 10,000 businesses worldwide.
 
----
-
-## Contributors
-
-- Obidur Rahman  
-- Mehreen Mallick Fiona  
-- Hasanul Banna Himel  
-- Zaynul Abedin Miah  
-
----
-
 ## Table of Contents
 
 - [Overview](#overview)
