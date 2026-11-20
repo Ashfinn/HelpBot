@@ -1,3 +1,111 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0D0D0D;
+  color: #FAFAFA;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(103, 186, 244, 0.35);
+}
+
+@layer components {
+  /* Film-grain overlay, like the reference posters */
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.09;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Glowing frosted "keycap" surface. Set --glow to an r,g,b triple to recolour. */
+  .key {
+    --glow: 30, 70, 219;
+    position: relative;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background:
+      radial-gradient(120% 95% at 50% 30%, rgba(var(--glow), 0.30), rgba(var(--glow), 0.08) 55%, rgba(255, 255, 255, 0.02) 100%),
+      #111114;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -18px 40px rgba(0, 0, 0, 0.45),
+      0 30px 80px -40px rgba(var(--glow), 0.7);
+    transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s, background .5s;
+  }
+  .key:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -18px 40px rgba(0, 0, 0, 0.35),
+      0 40px 100px -30px rgba(var(--glow), 0.95);
+  }
+  /* Fully lit keycap (hero / highlighted states) */
+  .key-lit {
+    background:
+      radial-gradient(70% 60% at 45% 45%, rgba(103, 186, 244, 0.95), rgba(var(--glow), 0.9) 45%, rgba(var(--glow), 0.55) 100%);
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -24px 50px rgba(0, 0, 30, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 40px 120px -20px rgba(var(--glow), 0.9);
+  }
+
+  /* Soft horizon arc (the glowing planet edge) */
+  .horizon {
+    position: absolute;
+    left: 50%;
+    width: 140%;
+    aspect-ratio: 1 / 1;
+    transform: translateX(-50%);
+    border-radius: 9999px;
+    background: radial-gradient(closest-side, rgba(13,13,13,1) 82%, rgba(30,70,219,.95) 90%, rgba(103,186,244,.65) 93%, rgba(232,214,190,.35) 95.5%, rgba(13,13,13,0) 100%);
+    filter: blur(18px);
+    pointer-events: none;
+  }
+
+  .btn-pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-soft px-7 py-3.5 text-[15px] font-semibold text-ink transition-all duration-300;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.4), 0 10px 40px -8px rgba(255,255,255,.35);
+  }
+  .btn-pill:hover {
+    box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 14px 60px -6px rgba(255,255,255,.5);
+    transform: translateY(-1px);
+  }
+  .btn-ghost-pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3.5 text-[15px] font-semibold text-soft backdrop-blur transition-all duration-300 hover:border-white/30 hover:bg-white/[0.07];
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.28em] text-white/50;
+  }
+  .section-title {
+    @apply font-display text-4xl font-bold leading-[1.05] tracking-tight text-soft md:text-6xl;
+  }
+  .glass {
+    @apply rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-xl;
+  }
+  .field {
+    @apply w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-soft placeholder-white/35 outline-none transition focus:border-sky/60 focus:bg-white/[0.06] focus:ring-4 focus:ring-bold/20;
+  }
+}
